@@ -1,0 +1,198 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    width: 100%;
+    font-family: 'arial', sans-serif;
+    background: #ffd562;
+}
+
+#menu{
+    width: 100%;  
+    background: #292929;
+    overflow: hidden;
+    padding: 40px 0;
+}
+#menu nav{
+    width: 1200px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#menu nav ul{
+    margin: 0 auto;
+    overflow: hidden;
+    width: 920px;
+}
+
+#menu nav ul a{
+    float: left;
+    margin-right: 40px;
+    color: #FFF;
+    font-family: sans-serif;
+    font-size: 30px;
+    list-style: none;
+    text-decoration: none;
+    color: #FFF;
+}
+
+#menu nav ul a:last-child{
+    margin-right: 0;
+}
+
+#container{
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    overflow: hidden;
+}
+
+.enlace{
+    margin-top: 70px;
+    margin-right: 20%;
+    float: left;
+    width: 40%;
+    overflow: hidden;
+    background: #ffd562;
+    border-radius: 3px;
+}
+
+.enlace:nth-child(2n){
+    margin-right: 0;
+}
+
+.enlace h1{
+    position: relative;
+    bottom: 180px;
+    left: 0;
+}
+
+.enlace a{
+    text-decoration: none;
+    color: #000;
+}
+
+#wrapper{
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+img.add{
+    width: 60px;
+    margin-bottom: 30px;
+    transition: all 100ms linear;
+}
+
+img.add:hover{
+    transform: scale(0.9);
+    transition: all 100ms linear;
+}
+
+
+
+/*---------------------TABLA------------------*/
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th, table td{
+    padding: 10px 20px;
+}
+
+th{
+    background: #CCC;
+}
+
+table tr{
+    background: #fefefe;
+}
+
+table tr:nth-child(2n){
+    background: #f0f0f0;
+}
+
+td#precio{
+    width: 75px;
+}
+
+td#fecha{
+    width: 85px;
+}
+
+tfoot{
+    text-align: center;
+}
+
+table img{
+    height: 20px;
+    transition: all 100ms linear;
+}
+
+table img:hover{
+    opacity: 0.5;
+    transform: scale(.9);
+    transition: all 100ms linear;
+}
+table .accion{
+    text-align: center;
+    padding: 0;
+}
+
+span{
+    float: right;
+}
+
+/*---------------------FORMULARIO----------------*/
+
+#wrapper h1{
+    text-align: center;
+}
+
+form{
+    overflow: hidden;
+    width: 450px;
+    padding: 25px 25px;
+    background: #ccc;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    margin: 50px auto;
+}
+
+input, select{
+    float: right;
+    width: 50%;
+    padding: 8px;
+}
+
+select{
+    width: 54.5%;
+}
+
+p{
+    margin-bottom: 20px;
+    line-height: 34px;
+    overflow: hidden;
+}
+
+input[type="submit"], input[type="button"]{
+    width: 20%;
+    float: right;
+    margin-top: 20px;
+}
+
+input[type="submit"]{
+    margin-right: 20px;
+}
+
+input.long{
+    width: 150px;
+}
+
+textarea{
+    float: right;
+}
+

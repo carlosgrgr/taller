@@ -1,0 +1,5 @@
+//importar
+mysql –u usuario_mysql nombre_bbdd < ruta_fichero_importación.sql
+
+//exportar
+mysqldump –u usuario_mysql -p nombre_bbdd > fichero_exportación.sql
