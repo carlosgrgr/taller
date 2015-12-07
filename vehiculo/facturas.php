@@ -41,6 +41,8 @@ $inners = $gestorjoin->join("ve.matricula='$matricula'");
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>Fecha</th>
+                    <th>Detalle</th>
+                    <th>Precio</th>
                 </tr>
 
                 <?php
@@ -52,6 +54,8 @@ $inners = $gestorjoin->join("ve.matricula='$matricula'");
                         <td><?= $inner["vehiculo"]->getMarca() ?> </td>
                         <td><?= $inner["vehiculo"]->getModelo() ?> </td>
                         <td><?= $inner["factura"]->getFecha() ?></td>
+                        <td><?= $inner["factura"]->getDetalle() ?></td>
+                        <td><?= $inner["factura"]->getPrecio() ?> €</td>
                     </tr>
                     <?php
                 }

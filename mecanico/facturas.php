@@ -43,6 +43,8 @@ $inners = $gestorjoin->join("me.id=$id");
                     <th>Nombre Mecánico</th>
                     <th>Vehículo</th>
                     <th>Fecha</th>
+                    <th>Detalles</th>
+                    <th>Precio</th>
                 </tr>
                 <?php
                 foreach ($inners as $indice => $inner) {
@@ -54,6 +56,8 @@ $inners = $gestorjoin->join("me.id=$id");
                         <td> <?= $inner["mecanico"]->getNombre() ?> </td>
                         <td> <?= $inner["factura"]->getVehiculo() ?></td>
                         <td> <?= $inner["factura"]->getFecha() ?></td>
+                        <td> <?= $inner["factura"]->getDetalle() ?></td>
+                        <td> <?= $inner["factura"]->getPrecio() ?> €</td>
                     </tr>
                     <?php
                 }

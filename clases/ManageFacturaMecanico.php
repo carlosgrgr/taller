@@ -16,7 +16,7 @@ class ManageFacturaMecanico {
             $factura = new Factura();
             $factura->set($fila);
             $mecanico = new Mecanico();
-            $mecanico->set($fila, 5);
+            $mecanico->set($fila, 7);
  
             $r[$contador]["factura"] = $factura;
             $r[$contador]["mecanico"] = $mecanico;

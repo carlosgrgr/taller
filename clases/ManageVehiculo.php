@@ -89,8 +89,10 @@ class ManageVehiculo {
         }
         
         $anio = $vehiculo->getAnio();
-        if($anio < 1901 || $anio > 2155 ){
-            return false;
+        if($anio !== null){
+            if($anio < 1901 || $anio > 2155 ){
+                return false;
+            }
         }
             
         $parametros = $vehiculo->getArray();

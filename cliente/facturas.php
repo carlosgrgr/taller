@@ -57,7 +57,7 @@ $inners = $gestorjoin->join("cli.id=$id");
                     <td><?= $inner["factura"]->getVehiculo(); ?></td>
                     <td><?= $inner["factura"]->getFecha(); ?></td>
                     <td><?= $inner["factura"]->getDetalle(); ?></td>
-                    <td><?= $inner["factura"]->getPrecio(); ?></td>
+                    <td><?= $inner["factura"]->getPrecio(); ?> €</td>
                 </tr>
                     <?php
                 }

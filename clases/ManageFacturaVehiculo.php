@@ -16,7 +16,7 @@ class ManageFacturaVehiculo {
             $factura = new Factura();
             $factura->set($fila);
             $vehiculo = new Vehiculo();
-            $vehiculo->set($fila, 5);
+            $vehiculo->set($fila, 7);
  
             $r[$contador]["factura"] = $factura;
             $r[$contador]["vehiculo"] = $vehiculo;
