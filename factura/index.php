@@ -4,22 +4,31 @@ $sesion = new Session();
 $user = $sesion->getUser();
 $bd = new DataBase();
 $gestor = new ManageFactura($bd);
+
 $page = Request::get("page");
 if ($page === null || $page === "") {
     $page = 1;
 }
-$facturas = $gestor->getList($page);
+
+$order = Request::get("order");
+$sort = Request::get("sort");
+$orden = "$order $sort";
+$nrpp = Request::get("nrpp");
+
+$registros = $gestor->count();
+$pages = ceil($registros / Constants::NRPP);
+
+if ($nrpp === "" || $nrpp === null) {
+    $nrpp = Constants::NRPP;
+}
+$queryString = "";
+if (trim($page) != "") {
+    $queryString = "&nrpp=$nrpp";
+}
+
+$facturas = $gestor->getList($page, trim($orden), $nrpp);
 $op = Request::get("op");
 $r = Request::get("r");
-
-$gestorjoin = new ManageFacturaMecanico($bd);
-$inners = $gestorjoin->join();
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -53,19 +62,20 @@ $inners = $gestorjoin->join();
         <div id="wrapper">
             <h1>Facturas</h1>
             <?php
-                if($sesion->isLogged()){
+            if($sesion->isLogged()){
             ?>
-            <a href="viewinsert.php"><img class="add" src="../images/add.png"/></a>
+                <a href="viewinsert.php"><img class="add" src="../images/add.png"/></a>
             <?php
+            }
+            if ($op != null) {
+                if($r == 1){
+                    echo "<h3>Se ha $op $r factura con éxito.</h3>";
+                }else{
+                    echo "<h3>No se ha podido realizar la operación de $op.</h3>";
                 }
-                if ($op != null) {
-                    if($r == 1){
-                        echo "<h3>Se ha $op $r factura con éxito.</h3>";
-                    }else{
-                        echo "<h3>No se ha podido realizar la operación de $op.</h3>";
-                    }
-                }
-                ?>
+            }
+            ?>
+            
             <table border="1">
                 <tr>
                     <th>numFactura</th>
@@ -86,11 +96,12 @@ $inners = $gestorjoin->join();
                 <tfoot>
                     <tr>
                         <td colspan="10">
-                            <a href="?page=1">Primero</a>
-                            <a href="?page=<?php echo max(1, $page - 1); ?>">Anterior</a>
-                            <a href="?page=<?php echo min($page + 1); ?>">Siguiente</a>
-                            <a href="?page=<?php echo "calcular"; ?>">Última</a>
-                            <span>Total: <?= $bd->getCount() ?> facturas</span>
+                            <span id="page"><?= "Página $page de ".  ceil($registros/$nrpp) ?></span>
+                            <a href="?<?= $queryString ?>">Primero</a>
+                            <a href="?page=<?= max(1, $page - 1) . $queryString ?>">Anterior</a>
+                            <a href="?page=<?= min($page + 1, $pages) . $queryString; ?>">Siguiente</a>
+                            <a href="?page=<?= $pages . $queryString; ?>">Última</a>
+                            <span>Total: <?= $bd->count("factura") ?> facturas</span>
                         </td>
                     </tr>
                 </tfoot>
@@ -118,6 +129,15 @@ $inners = $gestorjoin->join();
                 }
                 ?>
             </table>
+                
+            <form id="fselect" action=".">
+                <?php
+                $array = ["5" => "5", "10" => "10", "20" => "20", "50" => "50"];
+                echo Util::getSelect("nrpp", $array, $nrpp, false);
+                ?>
+                <input type="submit" value="Ver" />
+            </form>
+        </div>
             <script src="../js/scripts.js"></script>
     </body>
 </html>

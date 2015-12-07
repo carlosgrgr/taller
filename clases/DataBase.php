@@ -60,6 +60,13 @@ class DataBase {
         return $r;
     }
     
+    function count($tabla, $condicion="1=1", $parametros=array()) {
+        $sql = "select count(*) from $tabla where $condicion";
+        $this->send($sql, $parametros);
+        $fila = $this->getRow();
+        return $fila[0];
+    }
+    
     function delete($tabla, $parametros=array()){
         //delete from TABLA where CONDICION
        $camposWhere = "";

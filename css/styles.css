@@ -100,7 +100,7 @@ table{
 }
 
 table th, table td{
-    padding: 10px 20px;
+    padding: 10px 10px;
 }
 
 th{
@@ -144,6 +144,9 @@ table .accion{
 
 span{
     float: right;
+}
+span#page{
+    float: left;
 }
 
 /*---------------------FORMULARIO----------------*/
@@ -195,4 +198,26 @@ input.long{
 textarea{
     float: right;
 }
+
+/*----------------Formulario nrpp-------------*/
+form#fselect{
+    margin: 0 auto;
+    padding: 20px 20px;
+    border: 0;
+    background: none;
+    width: 19%;
+}
+
+form#fselect input{
+    float: none;
+    margin: 0;
+    width: 38%;
+}
+
+form#fselect select{
+    float: none;
+    width: 60%;
+}
+
+
 

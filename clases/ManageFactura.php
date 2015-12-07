@@ -20,6 +20,10 @@ class ManageFactura {
         $factura->set($fila);
         return $factura;
     }
+    
+    function count($condicion="1=1", $parametros=array()){
+        return $this->bd->count($this->tabla, $condicion, $parametros);
+    }
 
     function delete($numFactura) {
         //borrar por id
@@ -93,9 +97,15 @@ class ManageFactura {
         return $this->bd->insert($this->tabla, $parametros, false);
     }
 
-    function getList($pagina = 1, $nrpp = Constants::NRPP) {
+    function getList($pagina = 1, $orden="", $nrpp = Constants::NRPP,
+                     $condicion = "1=1", $parametros=array()) {
+        $ordenPredeterminado = "$orden, numFactura";
+        if(trim($orden)==="" || trim($orden)===null){
+            $ordenPredeterminado = "numFactura";
+        }
         $registroInicial = ($pagina - 1) * $nrpp;
-        $this->bd->select($this->tabla, "*", "1=1", array(), "numFactura", "$registroInicial,$nrpp");
+        $this->bd->select($this->tabla, "*", $condicion, $parametros, 
+                        $ordenPredeterminado, "$registroInicial,$nrpp");
         $r = array();
         while ($fila = $this->bd->getRow()) {
             $factura = new Factura();
@@ -112,10 +122,6 @@ class ManageFactura {
             $array[$fila[0]] = $fila[1];
         }
         return $array;
-    }
-
-    function count($parametros) {
-        //funcion que le pasas los parámetros y las condiciones del select y que nos diga cuantos registros han resultado;
     }
 
 }

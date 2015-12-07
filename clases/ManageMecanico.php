@@ -33,6 +33,10 @@ class ManageMecanico {
         return $mecanico;
     }
     
+    function count($condicion="1=1", $parametros=array()){
+        return $this->bd->count($this->tabla, $condicion, $parametros);
+    }
+    
     function delete($id) {
         //borrar por id
         $parametros = array();
@@ -114,9 +118,15 @@ class ManageMecanico {
         return $this->bd->insert($this->tabla, $parametros, false);
     }
     
-    function getList($pagina=1, $nrpp=Constants::NRPP) {
+    function getList($pagina=1, $orden="", $nrpp=Constants::NRPP,
+                     $condicion="1=1", $parametros=array()) {
+        $ordenPredeterminado = "$orden, id, nombre, apellido1, apellido2";
+        if(trim($orden) === "" || trim($orden) === null){
+            $ordenPredeterminado = "id, nombre, apellido1, apellido2";
+        }
         $registroInicial = ($pagina - 1) * $nrpp;
-        $this->bd->select($this->tabla, "*", "1=1", array(), "id, nombre, apellido1, apellido2", "$registroInicial,$nrpp");
+        $this->bd->select($this->tabla, "*", $condicion, $parametros,
+                $ordenPredeterminado, "$registroInicial,$nrpp");
         $r = array();
         while ($fila = $this->bd->getRow()){
             $mecanico = new Mecanico();
@@ -135,8 +145,5 @@ class ManageMecanico {
         return $array;
     }
     
-    function count($parametros){
-        //funcion que le pasas los parámetros y las condiciones del select y que nos diga cuantos registros han resultado;
-    }
 
 }

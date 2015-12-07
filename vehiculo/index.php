@@ -1,17 +1,33 @@
 <?php
 require '../clases/AutoCarga.php';
-
 $sesion = new Session();
 $user = $sesion->getUser();
-
 $bd = new DataBase();
 $gestor = new ManageVehiculo($bd);
 $gestorCliente = new ManageCliente($bd);
+
 $page = Request::get("page");
 if ($page === null || $page === "") {
     $page = 1;
 }
-$vehiculos = $gestor->getList($page);
+
+$order = Request::get("order");
+$sort = Request::get("sort");
+$orden = "$order $sort";
+$nrpp = Request::get("nrpp");
+
+$registros = $gestor->count();
+$pages = ceil($registros / Constants::NRPP);
+
+if ($nrpp === "" || $nrpp === null) {
+    $nrpp = Constants::NRPP;
+}
+$queryString = "";
+if (trim($page) != "") {
+    $queryString = "&nrpp=$nrpp";
+}
+
+$vehiculos = $gestor->getList($page, trim($orden), $nrpp);
 $op = Request::get("op");
 $r = Request::get("r");
 ?>
@@ -73,11 +89,12 @@ $r = Request::get("r");
                 <tfoot>
                     <tr>
                         <td colspan="11">
-                            <a href="?page=1">Primero</a>
-                            <a href="?page=<?php echo max(1, $page - 1); ?>">Anterior</a>
-                            <a href="?page=<?php echo min($page + 1); ?>">Siguiente</a>
-                            <a href="?page=<?php echo "calcular"; ?>">Última</a>
-                            <span>Total: <?= $bd->getCount() ?> vehículos</span>
+                            <span id="page"><?= "Página $page de ".  ceil($registros/$nrpp) ?></span>
+                            <a href="?<?= $queryString ?>">Primero</a>
+                            <a href="?page=<?= max(1, $page - 1) . $queryString ?>">Anterior</a>
+                            <a href="?page=<?= min($page + 1, $pages) . $queryString; ?>">Siguiente</a>
+                            <a href="?page=<?= $pages . $queryString; ?>">Última</a>
+                            <span>Total: <?= $bd->count("vehiculo") ?> vehículos</span>
                         </td>
                     </tr>
                 </tfoot>
@@ -106,6 +123,15 @@ $r = Request::get("r");
                 }
                 ?>
             </table>
+            
+            <form id="fselect" action=".">
+                <?php
+                $array = ["5" => "5", "10" => "10", "20" => "20", "50" => "50"];
+                echo Util::getSelect("nrpp", $array, $nrpp, false);
+                ?>
+                <input type="submit" value="Ver" />
+            </form>
+            
         </div>
         <script src="../js/scripts.js"></script>
     </body>

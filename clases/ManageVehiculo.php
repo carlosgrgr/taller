@@ -21,6 +21,10 @@ class ManageVehiculo {
         return $vehiculo;
     }
     
+    function count($condicion="1=1", $parametros=array()){
+        return $this->bd->count($this->tabla, $condicion, $parametros);
+    }
+    
     function delete($matricula) {
         $parametros = array();
         $parametros["matricula"] = $matricula;
@@ -93,9 +97,15 @@ class ManageVehiculo {
         return $this->bd->insert($this->tabla, $parametros, false);
     }
     
-    function getList($pagina=1, $nrpp=Constants::NRPP) {
+    function getList($pagina=1, $orden="", $nrpp=Constants::NRPP, 
+                     $condicion="1=1", $parametros=array()) {
+        $ordenPredeterminado = "$orden, matricula, marca, modelo";
+        if(trim($orden) === "" || trim($orden) === null){
+            $ordenPredeterminado = "matricula, marca, modelo";
+        }
         $registroInicial = ($pagina - 1) * $nrpp;
-        $this->bd->select($this->tabla, "*", "1=1", array(), "matricula, marca", "$registroInicial,$nrpp");
+        $this->bd->select($this->tabla, "*", $condicion, $parametros, 
+                        $ordenPredeterminado, "$registroInicial,$nrpp");
         $r = array();
         while ($fila = $this->bd->getRow()){
             $vehiculo = new Vehiculo();
@@ -112,10 +122,6 @@ class ManageVehiculo {
             $array[$fila[0]] = $fila[1];
         }
         return $array;
-    }
-    
-    function count($parametros){
-        //funcion que le pasas los parámetros y las condiciones del select y que nos diga cuantos registros han resultado;
     }
 
 }
